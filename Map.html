@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body style="background-color:#3498DB">
+	<button id="btn_right">move right</button>
+	<button id="btn_left">move left</button>
+	<button id="btn_up">move up</button>
+	<button id="btn_down">move down</button>
+
+	<canvas id="canvas" ></canvas>
+</body>
+<script type="text/javascript">
+	var btn_right = document.getElementById("btn_right");
+	btn_right.addEventListener("click", function(){
+		checkPath(steps,0,"right");
+	});
+	var btn_left = document.getElementById("btn_left");
+	btn_left.addEventListener("click", function(){
+		checkPath(-steps,0,"left");
+	});
+	var btn_up = document.getElementById("btn_up");
+	btn_up.addEventListener("click", function(){
+		checkPath(0,-steps,"up");
+	});
+	var btn_down = document.getElementById("btn_down");
+	btn_down.addEventListener("click", function(){
+		checkPath(0,steps,"down");
+	});
+
+	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+	var heart = canvas.getContext("2d");
+	var line = canvas.getContext("2d");
+	var start_x = 35, start_y = 150;
+	var path1 = [[400,150],[400, 800],[1000, 800],[1000,400],[1400,400],[1400,200],[1800,200]];
+	var path2 = [[40,150],[40, 500],[600, 500],[600,300],[800,300],[800,900],[1200,900],[1200,700],[1800,700]];
+	var steps = 20;
+
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+
+	ctx.lineWidth = 5;
+	ctx.strokeStyle = 'white';
+
+	drowCircle(start_x,start_y);
+	drowPath();
+
+
+	function moveUser( x,  y) {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		drowCircle(start_x + x , start_y + y);
+	}
+
+	function drowCircle(x,y) {
+		drowPath();
+		ctx.beginPath();
+		ctx.arc(x,y,50,0,Math.PI*2,true); 
+		ctx.stroke();
+		start_x = x;
+		start_y = y;
+	}
+
+	function drowPath() {
+		line.lineWidth = 10;
+		line.strokeStyle = '#F1C40F';
+		line.beginPath();
+		line.moveTo(35, 150);
+		for (var i = 0; i < path1.length; i++) {
+			line.lineTo(path1[i][0],path1[i][1])
+		}
+		line.stroke();
+
+		line.lineWidth = 10;
+		line.strokeStyle = '#D35400';
+		line.beginPath();
+		for (var i = 0; i < path2.length; i++) {
+			line.lineTo(path2[i][0],path2[i][1])
+		}
+		line.stroke();
+
+	}
+
+	function checkPath(x,y,movement) {
+		for (var i = 0; i < path1.length; i++) {
+			switch (movement){
+				case "right":{
+					if(start_x <= path1 [i][0] && start_y == path1[i][1]) {
+						if(steps + start_x > path1[i][0])
+						{
+							start_x = path1[i][0] - steps;
+						}
+						moveUser(x,y);
+					}
+					break;
+				}
+				case "left":{
+					if((i!=0 && start_x >= path1 [i-1][0] && start_y == path1[i][1]) || 
+						(start_x >= 35 && start_y == path1[i][1])) {
+						moveUser(x,y);
+					}
+					break;
+				}
+				case "up":{
+					if(start_x == path1 [i][0] && start_y >= path1[i][1]) {
+						if(steps + start_y > path1[i][1])
+						{
+							start_y = path1[i][1] - steps;
+						}
+						moveUser(x,y);
+					}
+					break;
+				}
+				case "down":{
+					if(start_x == path1 [i][0] && start_y <= path1[i][1]) {
+						if(steps + start_y > path1[i][1])
+						{
+							start_y = path1[i][1] - steps;
+						}
+						moveUser(x,y);
+					}
+					break;
+				}
+			}
+		}
+	}
+
+</script>
+</html>
