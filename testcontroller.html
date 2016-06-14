@@ -46,6 +46,10 @@
 				{
 				gameClient = new GameClient(); 
 				gameClient.setScreenConnectionTypeListener(self, self.onScreenConnectionTypeUpdated);
+				gameClient.setScreenConnectionListener(self, self.onScreenConnected);
+				gameClient.setScreenDisconnectionListener(self, self.onScreenDisconnected);
+
+
 				
 				//Development connection
 				gameClient.connect(SERVER_ADDRESS.host, SERVER_ADDRESS.port, "controller", GROUP_NAME, function(){});
@@ -54,6 +58,21 @@
 				//gameClient.connectAsController(function(){});	
 				};
 			
+			
+			self.onScreenConnected = function(id){
+
+				console.log("htmlPhone::onScreenConnected()"+id);
+				self.screenId = id;
+
+				gameClient.exposeRpcMethod("addPrize", self, self.addPrize);
+				gameClient.exposeRpcMethod("askMail", self, self.askMail);
+				gameClient.exposeRpcMethod("setScore", self, self.setScore);
+				gameClient.exposeRpcMethod("rtt", self, self.rtt);
+				
+				gameClient.notifyScreens("setPlayerName", "TestPlayer");
+
+
+			};			
 			self.sendButtonPress = function(direction)
 				{
 				console.log("TestController::sendButtonPress()");
