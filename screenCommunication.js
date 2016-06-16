@@ -5,13 +5,28 @@
 		
 		var SERVER_ADDRESS = {host: "spaceify.net", port: 1979};
 		var WEBRTC_CONFIG = {"iceServers":[{url:"stun:kandela.tv"},{url :"turn:kandela.tv", username:"webrtcuser", credential:"jeejeejee"}]};
-		var TARGETS = [{id: "coffee", posX: 1219, posY: 711, task: "Get a coffee.", image: 'http://192.168.1.203/coffee.png' , points: 2}, {id: "ham", posX: 530, posY: 100, task: "Get a hamburger.", image: 'http://192.168.1.203/hamburger.png' , points: 2}, {id: "cake", posX: 1549, posY: 323, task: "Get a cake.", image: 'http://192.168.1.203/cake.png' , points: 2}]	
+		var TARGETS = [{id: "coffee", posX: 1219, posY: 711, task: "Get a coffee.", image: 'http://192.168.1.203/UBISS/coffee.png' , points: 2}, {id: "ham", posX: 530, posY: 100, task: "Get a hamburger.", image: 'http://192.168.1.203/UBISS/hamburger.png' , points: 2}, {id: "cake", posX: 1549, posY: 323, task: "Get a cake.", image: 'http://192.168.1.203/UBISS/cake.png' , points: 2}]	
 		var players = {};	
 		
 		function getRandomInt(max) {
 			return Math.floor(Math.random() * max) + 1;
 		}
 		
+		function showTargets(){
+			console.log("showTargets::")
+			for (var x in TARGETS){
+				document.getElementById(TARGETS[x].id).style.display = 'none';
+				console.log("showTargets:: "+TARGETS[x].id)
+			}
+			for(var x in players){
+				console.log("showTargets:: "+ TARGETS[players[x].taskId].posX);
+				if (Math.abs(TARGETS[players[x].taskId].posX - path[players[x].currentPath][players[x].currentPosition][0]) < 100
+				&&  Math.abs(TARGETS[players[x].taskId].posY - path[players[x].currentPath][players[x].currentPosition][1]) < 100){
+					document.getElementById(TARGETS[players[x].taskId].id).style.display = 'initial';
+					
+				}
+			}
+		}
 		function TestScreen()
 			{
 			var self = this;
@@ -30,15 +45,17 @@
 			return size;
 			}
 			
-			//ToDO Correct moving function
+			/*//ToDO Correct moving function
 			movePlayer = function(callerId, direction){
 				players[callerId].posX=players[callerId].posX+1;
 				players[callerId].posY=players[callerId].posY+1;
-			};
+			};*/
 			
 			//ToDO Correct moving function
 			targetReached = function(callerId){
-				if (TARGETS[players[callerId].taskId].posX == path[players[callerId].currentPath][players[callerId].currentPosition][0]  && TARGETS[players[callerId].taskId].posY == path[players[callerId].currentPath][players[callerId].currentPosition][1]){
+				console.log("targetReached::Target/player x="+TARGETS[players[callerId].taskId].posX+"/" + path[players[callerId].currentPath][players[callerId].currentPosition][0] +" Target y" + TARGETS[players[callerId].taskId].posY + "/"+path[players[callerId].currentPath][players[callerId].currentPosition][1]);
+				if (TARGETS[players[callerId].taskId].posX == path[players[callerId].currentPath][players[callerId].currentPosition][0] 
+				&&  TARGETS[players[callerId].taskId].posY == path[players[callerId].currentPath][players[callerId].currentPosition][1]){
 					return true;
 				}
 				return false;
@@ -55,7 +72,7 @@
 			self.onControllerConnected = function (callerId)
 				{
 				console.log("onControllerConnected::" + callerId);
-				players[callerId] = {currentPath: 0, currentPosition: 0, points:0, stepsToTarget:0, taskId:getRandomInt(TARGETS.length)-1, timeLastI: (Math.floor(Date.now() / 1000))};
+				players[callerId] = {currentPath: 0, currentPosition: 0, points:0, stepsToTarget:0, taskId:1/*getRandomInt(TARGETS.length)-1*/, timeLastI: (Math.floor(Date.now() / 1000))};
 				console.log("onControllerConnected::" + players[callerId].currentPath);
 				gameClient.notifyController(callerId, "setTask",["Task: Collect a cup of coffee!"]);
 				console.log("PLAYERS: " + ObjectSize(players));
@@ -72,12 +89,14 @@
 			self.onButtonPressed = function(direction, callerId, connectionId, callback)
 				{
 				buttonPressCounter++;
+				showTargets();
 				//console.log("TestSreen::onButtonPressed() direction: "+direction+" callerId: "+callerId+" connectionId: "+connectionId);
 				//document.getElementById("message").innerHTML = "Button pressed "+ buttonPressCounter + "callerId "+ callerId;
-				movePlayer(callerId, direction);
+				//movePlayer(callerId, direction);
 				checkPath(direction, callerId);
 				players[callerId].stepsToTarget = players[callerId].stepsToTarget+1;
 				if (targetReached(callerId) == true){
+					console.log("TargetReached!")
 					players[callerId].points=players[callerId].points + TARGETS[players[callerId].taskId].points;
 					gameClient.notifyController(callerId, "updatePoints",[TARGETS[players[callerId].taskId].points]);
 					gameClient.notifyController(callerId, "updateItems",[TARGETS[players[callerId].taskId].image]);
@@ -96,7 +115,7 @@
 		
 			self.getTask = function(callerId, connectionId, callback)
 				{
-					gameClient.notifyController(callerId, "getTask", ["Task: Collect a cup of coffee!"]);
+					//gameClient.notifyController(callerId, "getTask", ["Task: Collect a cup of coffee!"]);
 				};
 				
 			self.onDisontrollerConnected = function(callerId)
@@ -239,7 +258,7 @@
 	}
 
 	function checkPath(movement, callerId) {
-		console.log(players[callerId])
+		/*console.log(players[callerId])
 		if(path[players[callerId].currentPath][players[callerId].currentPosition][0] == 1219 && path[players[callerId].currentPath][players[callerId].currentPosition][1] == 711){
  			document.getElementById("coffee").style.display = 'none';
 		}
@@ -248,7 +267,7 @@
 		}
 		else if(path[players[callerId].currentPath][players[callerId].currentPosition][0] == 530 && path[players[callerId].currentPath][players[callerId].currentPosition][1] == 100){
 			document.getElementById("ham").style.display = 'none';
-		}
+		}*/
 		if(movement == 'up')
 		{
 			if(players[callerId].currentPosition != 0){
