@@ -2,27 +2,43 @@
 <html>
 <head>
 	<title></title>
+	<link rel="stylesheet" type="text/css" href="css.css"> 
+	<style>
+		body {
+			background-image: url("maporange.png");
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+	</style>
 </head>
 <body style="background-color:#3498DB">
 	<button id="btn_right">move right</button>
 	<button id="btn_left">move left</button>
 	<button id="btn_up">move up</button>
 	<button id="btn_down">move down</button>
-
+<img id="coffee" src="coffee.png" alt="Coffee" class="movement coffee">
+<img id="cake" src="cake.png" alt="Coffee" class="movement cake">
+<img id="ham" src="hamburger.png" alt="Coffee" class="movement ham">
 	<canvas id="canvas" ></canvas>
 </body>
 <script type="text/javascript">
+	var temp = [];
+	var body = document.getElementsByTagName("body")[0];
+	body.addEventListener("click", function(event){
+		temp.push([event.clientX,event.clientY]);
+		console.log(temp.toString());
+	});
 	var btn_right = document.getElementById("btn_right");
 	btn_right.addEventListener("click", function(){
-		checkPath(steps,0,"right");
+		checkPath(0,steps,"right");
 	});
 	var btn_left = document.getElementById("btn_left");
 	btn_left.addEventListener("click", function(){
-		checkPath(-steps,0,"left");
+		checkPath(0,steps,"left");
 	});
 	var btn_up = document.getElementById("btn_up");
 	btn_up.addEventListener("click", function(){
-		checkPath(0,-steps,"up");
+		checkPath(0,steps,"up");
 	});
 	var btn_down = document.getElementById("btn_down");
 	btn_down.addEventListener("click", function(){
@@ -33,98 +49,141 @@
 	var ctx = canvas.getContext("2d");
 	var heart = canvas.getContext("2d");
 	var line = canvas.getContext("2d");
-	var start_x = 35, start_y = 150;
-	var path1 = [[400,150],[400, 800],[1000, 800],[1000,400],[1400,400],[1400,200],[1800,200]];
-	var path2 = [[40,150],[40, 500],[600, 500],[600,300],[800,300],[800,900],[1200,900],[1200,700],[1800,700]];
+	var start_x = 534, start_y = 13;
+	var path1 = [[534,13],[534,39],[530,74],[530,100],[527,133],[529,174],[531,200],[539,223],[545,242],[550,273],[559,305],[569,332],[582,366],[598,389],[608,412],[617,427],[633,456],[654,472],[685,491],[705,508],[730,522],[759,541],[792,562],[826,584],[854,601],[885,619],[908,638],[934,654],[967,645],[1003,626],[1022,620],[1060,616],[1087,632],[1122,647],[1160,672],[1189,691],[1219,711],[1251,729],[1281,751],[1305,775],[1332,793],[1364,809],[1400,827],[1429,838],[1429,838],[1456,834],[1497,850],[1542,853],[1589,857],[1635,852],[1686,851],[1737,841],[1771,834],[1815,826],[1853,824],[1886,820]];
+	var path2 = [[1225,710],[1245,677],[1269,641],[1289,616],[1317,584],[1330,559],[1347,528],[1367,491],[1386,455],[1402,426],[1421,396],[1439,369],[1450,334],[1476,289],[1498,253],[1514,225],[1532,193],[1549,159],[1566,122],[1587,94],[1602,67],[1612,38],[1621,10]];
+	var path3 = [[935,668],[914,696],[892,729],[875,760],[855,797],[840,818],[822,845],[804,877],[788,902],[773,926],[761,944]];
 	var steps = 20;
+	var step_count = 0;
+	mainPath = path1;
 
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 
 	ctx.lineWidth = 5;
-	ctx.strokeStyle = 'white';
+	ctx.strokeStyle = '#D35400';
 
 	drowCircle(start_x,start_y);
-	drowPath();
+	//drowPath();
 
 
-	function moveUser( x,  y) {
+	function moveUser( x,  y, path) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		drowCircle(start_x + x , start_y + y);
 	}
 
+	function moveUserOnMap( x,  y) {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		drowCircle(x , y);
+	}
+
 	function drowCircle(x,y) {
-		drowPath();
+		//drowPath();
 		ctx.beginPath();
-		ctx.arc(x,y,50,0,Math.PI*2,true); 
+		ctx.arc(x,y,10,0,Math.PI*2,true); 
+		ctx.fillStyle = '#D35400';
+		ctx.fill();
 		ctx.stroke();
 		start_x = x;
 		start_y = y;
 	}
 
-	function drowPath() {
-		line.lineWidth = 10;
-		line.strokeStyle = '#F1C40F';
-		line.beginPath();
-		line.moveTo(35, 150);
-		for (var i = 0; i < path1.length; i++) {
-			line.lineTo(path1[i][0],path1[i][1])
-		}
-		line.stroke();
+	// function drowPath() {
+	// 	line.lineWidth = 10;
+	// 	line.strokeStyle = '#F1C40F';
+	// 	line.beginPath();
+	// 	// line.moveTo(35, 150);
+	// 	for (var i = 0; i < path1.length; i++) {
+	// 		line.lineTo(path1[i][0],path1[i][1])
+	// 	}
+	// 	line.stroke();
 
-		line.lineWidth = 10;
-		line.strokeStyle = '#D35400';
-		line.beginPath();
-		for (var i = 0; i < path2.length; i++) {
-			line.lineTo(path2[i][0],path2[i][1])
-		}
-		line.stroke();
+	// 	line.lineWidth = 10;
+	// 	line.strokeStyle = '#D35400';
+	// 	line.beginPath();
+	// 	for (var i = 0; i < path2.length; i++) {
+	// 		line.lineTo(path2[i][0],path2[i][1])
+	// 	}
+	// 	line.stroke();
 
+	// }
+	var isBackward = false;
+
+	function Node(data) {
+		this.data = data;
+		this.parent = null;
+		this.children = [];
+	}
+
+	function Tree(data) {
+		var node = new Node(data);
+		this._root = node;
 	}
 
 	function checkPath(x,y,movement) {
-		for (var i = 0; i < path1.length; i++) {
-			switch (movement){
-				case "right":{
-					if(start_x <= path1 [i][0] && start_y == path1[i][1]) {
-						if(steps + start_x > path1[i][0])
-						{
-							start_x = path1[i][0] - steps;
-						}
-						moveUser(x,y);
-					}
-					break;
-				}
-				case "left":{
-					if((i!=0 && start_x >= path1 [i-1][0] && start_y == path1[i][1]) || 
-						(start_x >= 35 && start_y == path1[i][1])) {
-						moveUser(x,y);
-					}
-					break;
-				}
-				case "up":{
-					if(start_x == path1 [i][0] && start_y >= path1[i][1]) {
-						if(steps + start_y > path1[i][1])
-						{
-							start_y = path1[i][1] - steps;
-						}
-						moveUser(x,y);
-					}
-					break;
-				}
-				case "down":{
-					if(start_x == path1 [i][0] && start_y <= path1[i][1]) {
-						if(steps + start_y > path1[i][1])
-						{
-							start_y = path1[i][1] - steps;
-						}
-						moveUser(x,y);
-					}
-					break;
-				}
+		if(mainPath[step_count][0] == 1219 && mainPath[step_count][1] == 711){
+ 			document.getElementById("coffee").style.display = 'none';
+		}
+		else if(mainPath[step_count][0] == 1549 && mainPath[step_count][1] == 159){
+			document.getElementById("cake").style.display = 'none';
+		}
+		else if(mainPath[step_count][0] == 530 && mainPath[step_count][1] == 100){
+			document.getElementById("ham").style.display = 'none';
+		}
+		if( movement == 'up')
+		{
+			if(step_count != 0){
+				step_count--;
+				moveUserOnMap(mainPath[step_count][0],mainPath[step_count][1]);
+			}
+			else if(mainPath.length == 11){
+				mainPath = path1;
+				step_count = 27;
 			}
 		}
-	}
+		if( movement == 'left')
+		{
+			if(mainPath[step_count][0] >= 934 && mainPath[step_count][1] == 654)
+			{
+				mainPath = path3;
+				step_count = 0;
+			}
+			if(mainPath.length == 11 && step_count < mainPath.length)
+			{
+				step_count ++;
+				moveUserOnMap(mainPath[step_count][0],mainPath[step_count][1]);	
+			}
+		}
+		if( movement == 'down')
+		{
+			if(mainPath.length == 23)
+			{
+				if(step_count != 0){
+					step_count --;
+					moveUserOnMap(mainPath[step_count][0],mainPath[step_count][1]);	}
+					else{
+						mainPath = path1;
+						step_count = 35;
+					}
+				}
+				else if(step_count < mainPath.length){
+					step_count ++;
+					moveUserOnMap(mainPath[step_count][0],mainPath[step_count][1]);	}			
+				}
+				if( movement == 'right')
+				{
+					if(mainPath[step_count][0] == 1189 && mainPath[step_count][1] == 691)
+					{
+						mainPath = path2;
+						step_count = 0;
+					}
+					if(mainPath.length == 23 && step_count < mainPath.length)
+					{
+						step_count ++;
+						moveUserOnMap(mainPath[step_count][0],mainPath[step_count][1]);	
+					}
+				}
+			}
 
-</script>
-</html>
+		</script>
+		</html>
