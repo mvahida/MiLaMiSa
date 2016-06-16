@@ -5,7 +5,7 @@
 		
 		var SERVER_ADDRESS = {host: "spaceify.net", port: 1979};
 		var WEBRTC_CONFIG = {"iceServers":[{url:"stun:kandela.tv"},{url :"turn:kandela.tv", username:"webrtcuser", credential:"jeejeejee"}]};
-		var TARGETS = [{posX: 23, posY: 23, task: "Go to the library and get a book.", image: 'http://192.168.1.203/1465925339_si-duo-t-shirt.png' , points: 2}, {posX: 24, posY: 323, task: "Get a coffee.", image: 'http://192.168.1.203/1465925339_si-duo-t-shirt.png' , points: 2} ]	
+		var TARGETS = [{id: "coffee", posX: 1219, posY: 711, task: "Get a coffee.", image: 'http://192.168.1.203/coffee.png' , points: 2}, {id: "ham", posX: 530, posY: 100, task: "Get a hamburger.", image: 'http://192.168.1.203/hamburger.png' , points: 2}, {id: "cake", posX: 1549, posY: 323, task: "Get a cake.", image: 'http://192.168.1.203/cake.png' , points: 2}]	
 		var players = {};	
 		
 		function getRandomInt(max) {
@@ -37,9 +37,8 @@
 			};
 			
 			//ToDO Correct moving function
-			targetReached = function(callerId)
-			{
-				if (TARGETS[players[callerId].taskId].posX == players[callerId].posX && TARGETS[players[callerId].taskId].posY == players[callerId].posY){
+			targetReached = function(callerId){
+				if (TARGETS[players[callerId].taskId].posX == path[players[callerId].currentPath][players[callerId].currentPosition][0]  && TARGETS[players[callerId].taskId].posY == path[players[callerId].currentPath][players[callerId].currentPosition][1]){
 					return true;
 				}
 				return false;
@@ -56,7 +55,7 @@
 			self.onControllerConnected = function (callerId)
 				{
 				console.log("onControllerConnected::" + callerId);
-				players[callerId] = {currentPath: 1, currentPosition: 1, points:0, stepsToTarget:0, taskId:getRandomInt(TARGETS.length)-1, timeLastI: (Math.floor(Date.now() / 1000))};
+				players[callerId] = {currentPath: 0, currentPosition: 0, points:0, stepsToTarget:0, taskId:getRandomInt(TARGETS.length)-1, timeLastI: (Math.floor(Date.now() / 1000))};
 				console.log("onControllerConnected::" + players[callerId].currentPath);
 				gameClient.notifyController(callerId, "setTask",["Task: Collect a cup of coffee!"]);
 				console.log("PLAYERS: " + ObjectSize(players));
@@ -82,6 +81,7 @@
 					players[callerId].points=players[callerId].points + TARGETS[players[callerId].taskId].points;
 					gameClient.notifyController(callerId, "updatePoints",[TARGETS[players[callerId].taskId].points]);
 					gameClient.notifyController(callerId, "updateItems",[TARGETS[players[callerId].taskId].image]);
+					document.getElementById(TARGETS[players[callerId].taskId].id).style.display = 'none';
 					players[callerId].taskId = getRandomInt(TARGETS.length)-1;
 					players[callerId].stepsToTarget = 0;
 				}
