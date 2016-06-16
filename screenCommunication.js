@@ -197,13 +197,15 @@
 
 	function drowCircle(x,y) {
 		//drowPath();
-		ctx.beginPath();
+		/**ctx.beginPath();
 		ctx.arc(x,y,10,0,Math.PI*2,true); 
 		ctx.fillStyle = '#D35400';
 		ctx.fill();
 		ctx.stroke();
 		start_x = x;
-		start_y = y;
+		start_y = y;**/
+		document.getElementById('user').style.left=x-30+ 'px';
+		document.getElementById('user').style.top=y-30+ 'px';
 	}
 
 	// function drowPath() {
