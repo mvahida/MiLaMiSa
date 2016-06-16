@@ -5,7 +5,7 @@
 		
 		var SERVER_ADDRESS = {host: "spaceify.net", port: 1979};
 		var WEBRTC_CONFIG = {"iceServers":[{url:"stun:kandela.tv"},{url :"turn:kandela.tv", username:"webrtcuser", credential:"jeejeejee"}]};
-		var TARGETS = [{posX: 23, posY: 23, task: "Go to the library and get a book.", image: 'http://192.168.1.203/1465925339_si-duo-t-shirt.png' , points: 2} ]	
+		var TARGETS = [{posX: 23, posY: 23, task: "Go to the library and get a book.", image: 'http://192.168.1.203/1465925339_si-duo-t-shirt.png' , points: 2}, {posX: 24, posY: 323, task: "Get a coffee.", image: 'http://192.168.1.203/1465925339_si-duo-t-shirt.png' , points: 2} ]	
 			
 		function getRandomInt(max) {
 			return Math.floor(Math.random() * max) + 1;
@@ -55,7 +55,7 @@
 			self.onControllerConnected = function (callerId)
 				{
 				console.log("onControllerConnected::" + callerId);
-				players[callerId] = {posX: 0, posY: 0, points:0, stepsToTarget:0 taskId:getRandomInt(TARGETS.length)-1};
+				players[callerId] = {posX: 0, posY: 0, points:0, stepsToTarget:0, taskId:getRandomInt(TARGETS.length)-1};
 				console.log("onControllerConnected::" + players[callerId].posX);
 				gameClient.notifyController(callerId, "setTask",["Task: Collect a cup of coffee!"]);
 				console.log("PLAYERS: " + ObjectSize(players));
