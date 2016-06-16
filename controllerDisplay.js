@@ -76,7 +76,7 @@
 			controller.sendButtonPress("right");
 		}
 		if(mousePos.x > 75 && mousePos.y < 100 && mousePos.x < 120){
-			controller.sendButtonPress("top");
+			controller.sendButtonPress("up");
 			console.log("Top");
 		}
 		if(mousePos.x > 75 && mousePos.y > 100 && mousePos.x < 120){
