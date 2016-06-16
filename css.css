@@ -44,14 +44,20 @@
     position: absolute;
     left: 1219px;
     top: 711px;
+    width: 60px;
+    height: 60px;
 }
 .cake{
     position: absolute;
     left: 1510px;
     top: 159px;
+    width: 60px;
+    height: 60px;
 }
 .ham{
     position: absolute;
     left: 530px;
     top: 100px;
+    width: 60px;
+    height: 60px;
 }
