@@ -71,7 +71,7 @@
 				//document.getElementById("task").innerHTML = taskString;
 
 				};
-	
+
 			self.updateItems = function(param){
 				console.log("controllerCommunication::updateItems "+ param)
 				if (param != null){
@@ -82,8 +82,9 @@
 					var imageObj = new Image();
 
 					imageObj.onload = function() {
-						bcontext.drawImage(imageObj, imageOffSetX, imageOffSetY, 40, 40);
+						bcontext.drawImage(this, imageOffSetX, imageOffSetY, 40, 40);
 					};
+					
 					imageObj.src = param;
 					imageOffSetX=imageOffSetX-40;
 					if (imageOffSetX < 0){

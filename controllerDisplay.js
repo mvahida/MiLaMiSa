@@ -1,15 +1,7 @@
 					
 	  var bCanvas = document.getElementById('bCanvas');
       var bcontext = bCanvas.getContext('2d');
-/*	  var imageObj = new Image();
 
-      imageObj.onload = function() {
-        bcontext.drawImage(imageObj, 250, 40, 40, 40);
-      };
-	  
-	  
-      imageObj.src = 'http://192.168.1.203/1465925339_si-duo-t-shirt.png';
-*/	  
 	  bcontext.font = "20px Arial";
 	  bcontext.fillText("Collected Items:",150,20);
 	  bcontext.closePath();
