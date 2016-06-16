@@ -30,19 +30,19 @@
 	});
 	var btn_right = document.getElementById("btn_right");
 	btn_right.addEventListener("click", function(){
-		checkPath(0,steps,"right");
+		checkPath("right");
 	});
 	var btn_left = document.getElementById("btn_left");
 	btn_left.addEventListener("click", function(){
-		checkPath(0,steps,"left");
+		checkPath("left");
 	});
 	var btn_up = document.getElementById("btn_up");
 	btn_up.addEventListener("click", function(){
-		checkPath(0,steps,"up");
+		checkPath("up");
 	});
 	var btn_down = document.getElementById("btn_down");
 	btn_down.addEventListener("click", function(){
-		checkPath(0,steps,"down");
+		checkPath("down");
 	});
 
 	var canvas = document.getElementById("canvas");
@@ -120,7 +120,7 @@
 		this._root = node;
 	}
 
-	function checkPath(x,y,movement) {
+	function checkPath(movement) {
 		if(mainPath[step_count][0] == 1219 && mainPath[step_count][1] == 711){
  			document.getElementById("coffee").style.display = 'none';
 		}
