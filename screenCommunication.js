@@ -1,11 +1,11 @@
 			
 		//Group name for development use
 				
-		var GROUP_NAME = "lars";
+		var GROUP_NAME = "lars1";
 		
 		var SERVER_ADDRESS = {host: "spaceify.net", port: 1979};
 		var WEBRTC_CONFIG = {"iceServers":[{url:"stun:kandela.tv"},{url :"turn:kandela.tv", username:"webrtcuser", credential:"jeejeejee"}]};
-		var TARGETS = [{id: "coffee", posX: 1219, posY: 711, task: "Get a coffee.", image: 'http://192.168.1.203/UBISS/coffee.png' , points: 2}, {id: "ham", posX: 530, posY: 100, task: "Get a hamburger.", image: 'http://192.168.1.203/UBISS/hamburger.png' , points: 2}, {id: "cake", posX: 1549, posY: 323, task: "Get a cake.", image: 'http://192.168.1.203/UBISS/cake.png' , points: 2}]	
+		var TARGETS = [{id: "coffee", posX: 1219, posY: 711, task: "Get a coffee.", image: 'http://192.168.1.203/UBISS/coffee.png' , points: 2}, {id: "ham", posX: 530, posY: 100, task: "Get a hamburger.", image: 'http://192.168.1.203/UBISS/hamburger.png' , points: 2}, {id: "cake", posX: 1514, posY: 225, task: "Get a cake.", image: 'http://192.168.1.203/UBISS/cake.png' , points: 2}]	
 		var players = {};	
 		
 		function getRandomInt(max) {
@@ -47,9 +47,10 @@
 			
 
 			targetReached = function(callerId){
-				console.log("targetReached::Target/player x="+TARGETS[players[callerId].taskId].posX+"/" + path[players[callerId].currentPath][players[callerId].currentPosition][0] +" Target y" + TARGETS[players[callerId].taskId].posY + "/"+path[players[callerId].currentPath][players[callerId].currentPosition][1]);
+				console.log("targetReached::called "+TARGETS[players[callerId].taskId].id + "("+TARGETS[players[callerId].taskId].posX+"/"+path[players[callerId].currentPath][players[callerId].currentPosition][0]+")("+TARGETS[players[callerId].taskId].posY +"/"+path[players[callerId].currentPath][players[callerId].currentPosition][1]);
 				if (TARGETS[players[callerId].taskId].posX == path[players[callerId].currentPath][players[callerId].currentPosition][0] 
 				&&  TARGETS[players[callerId].taskId].posY == path[players[callerId].currentPath][players[callerId].currentPosition][1]){
+					console.log("targetReached::"+TARGETS[players[callerId].taskId].id);
 					return true;
 				}
 				return false;
@@ -66,9 +67,9 @@
 			self.onControllerConnected = function (callerId)
 				{
 				console.log("onControllerConnected::" + callerId);
-				players[callerId] = {currentPath: 0, currentPosition: 0, points:0, stepsToTarget:0, taskId:1/*getRandomInt(TARGETS.length)-1*/, timeLastI: (Math.floor(Date.now() / 1000))};
+				players[callerId] = {currentPath: 0, currentPosition: 0, points:0, stepsToTarget:0, taskId:getRandomInt(TARGETS.length)-1, timeLastI: (Math.floor(Date.now() / 1000))};
 				console.log("onControllerConnected::" + players[callerId].currentPath);
-				gameClient.notifyController(callerId, "setTask",["Task: Collect a cup of coffee!"]);
+				gameClient.notifyController(callerId, "getTask",["Task: Collect a cup of coffee!"]);
 				console.log("PLAYERS: " + ObjectSize(players));
 				};
 			
@@ -83,7 +84,7 @@
 			self.onButtonPressed = function(direction, callerId, connectionId, callback)
 				{
 				buttonPressCounter++;
-				//showTargets();
+				showTargets();
 
 				checkPath(direction, callerId);
 				players[callerId].stepsToTarget = players[callerId].stepsToTarget+1;
@@ -92,20 +93,20 @@
 					players[callerId].points=players[callerId].points + TARGETS[players[callerId].taskId].points;
 					gameClient.notifyController(callerId, "updatePoints",[TARGETS[players[callerId].taskId].points]);
 					gameClient.notifyController(callerId, "updateItems",[TARGETS[players[callerId].taskId].image]);
-					document.getElementById(TARGETS[players[callerId].taskId].id).style.display = 'none';
+					//document.getElementById(TARGETS[players[callerId].taskId].id).style.display = 'none';
 					players[callerId].taskId = getRandomInt(TARGETS.length)-1;
 					players[callerId].stepsToTarget = 0;
 				}
 			
 				gameClient.notifyController(callerId, "updateInformation",[self.informationMessage()]);
-				
+				gameClient.notifyController(callerId, "getTask", [TARGETS[players[callerId].taskId].task])
 				};
 		
-			self.getTask = function(callerId, connectionId, callback)
+/*			self.getTask = function(callerId, connectionId, callback)
 				{
 					//gameClient.notifyController(callerId, "getTask", ["Task: Collect a cup of coffee!"]);
 				};
-				
+*/				
 			self.onDisontrollerConnected = function(callerId)
 				{
 					delete players[callerId];
@@ -113,7 +114,7 @@
 			self.connect = function()
 				{
 				gameClient.exposeRpcMethod( "onButtonPressed", self, self.onButtonPressed);			
-				gameClient.exposeRpcMethod( "getTask", self, self.selfGetTask);
+				//gameClient.exposeRpcMethod( "getTask", self, self.selfGetTask);
 				gameClient.exposeRpcMethod( "controllerClosed", self, self.controllerClosed);
 				gameClient.connect(SERVER_ADDRESS.host, SERVER_ADDRESS.port, "screen", GROUP_NAME, function(){});
 				gameClient.setControllerConnectionListener(self, self.onControllerConnected);
@@ -129,6 +130,7 @@
 		window.onload = function()
 			{
 			screen.connect();
+			showTargets();
 			}
 				
 				

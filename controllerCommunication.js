@@ -1,6 +1,6 @@
 		//Group name for development use
 				
-		var GROUP_NAME = "lars";
+		var GROUP_NAME = "lars1";
 				
 		var SERVER_ADDRESS = {host: "spaceify.net", port: 1979};
 		var WEBRTC_CONFIG = {"iceServers":[{url:"stun:kandela.tv"},{url :"turn:kandela.tv", username:"webrtcuser", credential:"jeejeejee"}]};
@@ -37,15 +37,12 @@
 				gameClient.exposeRpcMethod("getTask", self, self.setTask);
 				gameClient.exposeRpcMethod("updatePoints",self, self.updatePoints);
 				gameClient.exposeRpcMethod("updateItems",self, self.updateItems);
-				gameClient.exposeRpcMethod("updateInformation",self, self.updateInformation);
-				
-				self.getTask();
-				
+				gameClient.exposeRpcMethod("updateInformation",self, self.updateInformation);		
 			};
 			
 			//Gets the current task for the player from the screen
 			self.setTask = function(taskString){
-				console.log("New Task"+ taskString)
+				console.log("setTask::"+ taskString)
 				document.getElementById("task").innerHTML = taskString;
 			};
 			
@@ -56,11 +53,11 @@
 				gameClient.notifyScreens("onButtonPressed",[direction]);
 				};
 				
-			self.getTask = function()
+			/*self.getTask = function()
 				{
 					console.log("getTask");
 					gameClient.notifyScreens("onButtonPressed","top");
-				};				
+				};*/			
 			self.updatePoints = function(param){
 				
 				if (param != null){
