@@ -63,7 +63,7 @@ h2 {
 	font-size: 14px;
 	border-bottom-left-radius: 15px;
 	border-bottom-right-radius: 15px;
-	height: 75px;
+	height: auto;
 	background-color: #3c4543;
 }
 
