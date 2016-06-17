@@ -73,7 +73,6 @@
 				console.log("controllerCommunication::updateItems "+ param)
 				if (param != null){
 					console.log("controllerCommunication::updateItems "+ param)
-					//items.push(param);
 					var bCanvas = document.getElementById('bCanvas');
 					var bcontext = bCanvas.getContext('2d');
 					var imageObj = new Image();

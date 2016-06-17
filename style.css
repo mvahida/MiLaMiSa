@@ -51,8 +51,9 @@ h2 {
 }
 
 .right{
-	width: 45%;
-	float: right;
+		position: absolute;
+		float: right;
+		right: 8px;
 }
 
 #footer{
