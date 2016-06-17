@@ -68,6 +68,7 @@
 				{
 				console.log("onControllerConnected::" + callerId);
 				players[callerId] = {currentPath: 0, currentPosition: 0, points:0, stepsToTarget:0, taskId:getRandomInt(TARGETS.length)-1, timeLastI: (Math.floor(Date.now() / 1000))};
+				img_create(callerId);
 				console.log("onControllerConnected::" + players[callerId].currentPath);
 				gameClient.notifyController(callerId, "getTask",["Task: Collect a cup of coffee!"]);
 				console.log("PLAYERS: " + ObjectSize(players));
@@ -169,7 +170,7 @@
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 
-	drowCircle(start_x,start_y);
+	//drowCircle(start_x,start_y);
 	//drowPath();
 
 
@@ -178,12 +179,19 @@
 		drowCircle(start_x + x , start_y + y);
 	}
 
-	function moveUserOnMap( x,  y) {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		drowCircle(x , y);
+	function moveUserOnMap( x,  y,id) {
+		document.getElementById(id).style.left = x  + "px";
+		document.getElementById(id).style.top = y -60 + "px";
 	}
+	Object.size = function(obj) {
+	    var size = 0, key;
+	    for (key in obj) {
+	        if (obj.hasOwnProperty(key)) size++;
+	    }
+	    return size;
+	};
 
-	function drowCircle(x,y) {
+	function drowCircle(x,y,id) {
 		//drowPath();
 		/**ctx.globalCompositeOperation = "source-over";
 		ctx.beginPath();
@@ -193,23 +201,20 @@
 		ctx.stroke();
 		start_x = x;
 		start_y = y;**/
-		document.getElementById("user").style.left = x  + "px";
-		document.getElementById("user").style.top = y -60 + "px";
+		document.getElementById(id).style.left = x  + "px";
+		document.getElementById(id).style.top = y -60 + "px";
 	}
-
+	function img_create(id) {
+	    var img= document.createElement("img");
+	    var length = Object.size(players);
+	    img.src= "players/user" + (length > 10 ? 1 : length) + ".png";
+	    img.id= id;
+	    img.style.left = "534px";
+	    img.style.top = "74px";
+	    document.body.appendChild(img);
+	}
 
 	var isBackward = false;
-
-	function Node(data) {
-		this.data = data;
-		this.parent = null;
-		this.children = [];
-	}
-
-	function Tree(data) {
-		var node = new Node(data);
-		this._root = node;
-	}
 
 	function checkPath(movement, callerId) {
 		/*console.log(players[callerId])
@@ -222,7 +227,6 @@
 		else if(path[players[callerId].currentPath][players[callerId].currentPosition][0] == 530 && path[players[callerId].currentPath][players[callerId].currentPosition][1] == 100){
 			document.getElementById("ham").style.display = 'none';
 		}*/
-
 		var x = path[players[callerId].currentPath][players[callerId].currentPosition][0];
 		var y = path[players[callerId].currentPath][players[callerId].currentPosition][1];
 
@@ -230,7 +234,7 @@
 		{
 			if(players[callerId].currentPosition != 0){
 				players[callerId].currentPosition--;
-				moveUserOnMap(x, y);
+				moveUserOnMap(x, y,callerId);
 			}
 			else if(players[callerId].currentPath == 2){
 				players[callerId].currentPath = 0;
@@ -247,7 +251,7 @@
 			if(players[callerId].currentPath == 2 && players[callerId].currentPosition < path[players[callerId].currentPath].length)
 			{
 				players[callerId].currentPosition ++;
-				moveUserOnMap(x,y);	
+				moveUserOnMap(x,y,callerId);	
 			}
 		}
 		if( movement == 'down')
@@ -256,7 +260,7 @@
 			{
 				if(players[callerId].currentPosition != 0){
 					players[callerId].currentPosition--;
-					moveUserOnMap(x,y);	}
+					moveUserOnMap(x,y,callerId);	}
 					else{
 						players[callerId].currentPath = 0;
 						players[callerId].currentPosition = 35;
@@ -264,7 +268,7 @@
 				}
 				else if(players[callerId].currentPosition < path[players[callerId].currentPath].length){
 					players[callerId].currentPosition++;
-					moveUserOnMap(x,y);	}			
+					moveUserOnMap(x,y,callerId);	}			
 				}
 		if( movement == 'right')
 		{
@@ -276,7 +280,7 @@
 			if(players[callerId].currentPath == 1 && players[callerId].currentPosition < path[players[callerId].currentPath].length)
 			{
 				players[callerId].currentPosition++;
-				moveUserOnMap(x,y);
+				moveUserOnMap(x,y,callerId);
 			}
 		}
 			}
