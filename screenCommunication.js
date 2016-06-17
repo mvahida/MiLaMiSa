@@ -141,9 +141,14 @@
 	var ctx = canvas.getContext("2d");
 	var heart = canvas.getContext("2d");
 	var line = canvas.getContext("2d");
-	var start_x = 534, start_y = 13;
-	var path = [[[534,13],[534,39],[530,74],[530,100],[527,133],[529,174],[531,200],[539,223],[545,242],[550,273],[559,305],[569,332],[582,366],[598,389],[608,412],[617,427],[633,456],[654,472],[685,491],[705,508],[730,522],[759,541],[792,562],[826,584],[854,601],[885,619],[908,638],[934,654],[967,645],[1003,626],[1022,620],[1060,616],[1087,632],[1122,647],[1160,672],[1189,691],[1219,711],[1251,729],[1281,751],[1305,775],[1332,793],[1364,809],[1400,827],[1429,838],[1429,838],[1456,834],[1497,850],[1542,853],[1589,857],[1635,852],[1686,851],[1737,841],[1771,834],[1815,826],[1853,824],[1886,820]]
-	,[[1225,710],[1245,677],[1269,641],[1289,616],[1317,584],[1330,559],[1347,528],[1367,491],[1386,455],[1402,426],[1421,396],[1439,369],[1450,334],[1476,289],[1498,253],[1514,225],[1532,193],[1549,159],[1566,122],[1587,94],[1602,67],[1612,38],[1621,10]]
+	var start_x = 534, start_y = 74;
+	var path = [[[530,74],[530,100],[527,133],[529,174],[531,200],[539,223],[545,242],[550,273],[559,305],[569,332],
+	[582,366],[598,389],[608,412],[617,427],[633,456],[654,472],[685,491],[705,508],[730,522],[759,541],[792,562],
+	[826,584],[854,601],[885,619],[908,638],[934,654],[967,645],[1003,626],[1022,620],[1060,616],[1087,632],[1122,647],
+	[1160,672],[1189,691],[1219,711],[1251,729],[1281,751],[1305,775],[1332,793],[1364,809],[1400,827],[1429,838],[1429,838],
+	[1456,834],[1497,850],[1542,853],[1589,857],[1635,852],[1686,851],[1737,841],[1771,834],[1815,826],[1853,824],[1886,820]]
+	,[[1225,710],[1245,677],[1269,641],[1289,616],[1317,584],[1330,559],[1347,528],[1367,491],[1386,455],[1402,426],[1421,396],
+	[1439,369],[1450,334],[1476,289],[1498,253],[1514,225],[1532,193],[1549,159],[1566,122],[1587,94],[1602,67],[1612,38],[1621,10]]
 	,[[935,668],[914,696],[892,729],[875,760],[855,797],[840,818],[822,845],[804,877],[788,902],[773,926],[761,944]]];
 	var imageObj = new Image();
 
@@ -178,14 +183,16 @@
 
 	function drowCircle(x,y) {
 		//drowPath();
-		ctx.globalCompositeOperation = "source-over";
+		/**ctx.globalCompositeOperation = "source-over";
 		ctx.beginPath();
 		ctx.arc(x,y,10,0,Math.PI*2,true); 
 		ctx.fillStyle = '#D35400';
 		ctx.fill();
 		ctx.stroke();
 		start_x = x;
-		start_y = y;
+		start_y = y;**/
+		document.getElementById("user").style.left = x  + "px";
+		document.getElementById("user").style.top = y -60 + "px";
 	}
 
 
@@ -213,11 +220,15 @@
 		else if(path[players[callerId].currentPath][players[callerId].currentPosition][0] == 530 && path[players[callerId].currentPath][players[callerId].currentPosition][1] == 100){
 			document.getElementById("ham").style.display = 'none';
 		}*/
+
+		var x = path[players[callerId].currentPath][players[callerId].currentPosition][0];
+		var y = path[players[callerId].currentPath][players[callerId].currentPosition][1];
+
 		if(movement == 'up')
 		{
 			if(players[callerId].currentPosition != 0){
 				players[callerId].currentPosition--;
-				moveUserOnMap(path[players[callerId].currentPath][players[callerId].currentPosition][0], path[players[callerId].currentPath][players[callerId].currentPosition][1]);
+				moveUserOnMap(x, y);
 			}
 			else if(players[callerId].currentPath == 2){
 				players[callerId].currentPath = 0;
@@ -226,7 +237,7 @@
 		}
 		if( movement == 'left')
 		{
-			if(path[players[callerId].currentPath][players[callerId].currentPosition][0] >= 934 && path[players[callerId].currentPath][players[callerId].currentPosition][1] == 654)
+			if(x >= 908 && x <= 967 && y >= 638 && y <= 645)
 			{
 				players[callerId].currentPath = 2;
 				players[callerId].currentPosition = 0;
@@ -234,7 +245,7 @@
 			if(players[callerId].currentPath == 2 && players[callerId].currentPosition < path[players[callerId].currentPath].length)
 			{
 				players[callerId].currentPosition ++;
-				moveUserOnMap(path[players[callerId].currentPath][players[callerId].currentPosition][0],path[players[callerId].currentPath][players[callerId].currentPosition][1]);	
+				moveUserOnMap(x,y);	
 			}
 		}
 		if( movement == 'down')
@@ -243,7 +254,7 @@
 			{
 				if(players[callerId].currentPosition != 0){
 					players[callerId].currentPosition--;
-					moveUserOnMap(path[players[callerId].currentPath][players[callerId].currentPosition][0],path[players[callerId].currentPath][players[callerId].currentPosition][1]);	}
+					moveUserOnMap(x,y);	}
 					else{
 						players[callerId].currentPath = 0;
 						players[callerId].currentPosition = 35;
@@ -251,19 +262,19 @@
 				}
 				else if(players[callerId].currentPosition < path[players[callerId].currentPath].length){
 					players[callerId].currentPosition++;
-					moveUserOnMap(path[players[callerId].currentPath][players[callerId].currentPosition][0],path[players[callerId].currentPath][players[callerId].currentPosition][1]);	}			
+					moveUserOnMap(x,y);	}			
 				}
-				if( movement == 'right')
-				{
-					if(path[players[callerId].currentPath][players[callerId].currentPosition][0] == 1189 && path[players[callerId].currentPath][players[callerId].currentPosition][1] == 691)
-					{
-						players[callerId].currentPath = 1;
-						players[callerId].currentPosition = 0;
-					}
-					if(players[callerId].currentPath == 1 && players[callerId].currentPosition < path[players[callerId].currentPath].length)
-					{
-						players[callerId].currentPosition++;
-						moveUserOnMap(path[players[callerId].currentPath][players[callerId].currentPosition][0],path[players[callerId].currentPath][players[callerId].currentPosition][1]);
-					}
-				}
+		if( movement == 'right')
+		{
+			if(x >= 1160 && x <= 1219 && y >= 672 && y <= 711)
+			{
+				players[callerId].currentPath = 1;
+				players[callerId].currentPosition = 0;
+			}
+			if(players[callerId].currentPath == 1 && players[callerId].currentPosition < path[players[callerId].currentPath].length)
+			{
+				players[callerId].currentPosition++;
+				moveUserOnMap(x,y);
+			}
+		}
 			}
