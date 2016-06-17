@@ -2,51 +2,37 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<style>
-		.container {
-			position: relative;
-		}
-
-		.right {
-			position: absolute;
-			right: 16px;
-
-		}
-		.left {
-			position: absolute;
-			left: 16px;
-		}
-		.bottomright {
-			position: absolute;
-			bottom: 8px;
-			right: 16px;
-		}
-		.bottomleft {
-			position: absolute;
-			bottom: 8px;
-			left: 16px;
-		}
-
-
-		</style>
+		<link rel='stylesheet' type='text/css' href='style.css' />
 		<script type="text/javascript" src="http://spaceify.net/games/g/gamelib.min.js"></script>		
-		<script type="text/javascript" src="http://192.168.1.203/ubiss/controllerCommunication.js"></script>
-		<title>
-			Controller
-		</title>
+		<script type="text/javascript" src="controllerCommunication.js"></script>
+		<script type="text/javascript" src="controllerDisplay.js"></script>
+		<title>Controller</title>
 	</head>
 <body>
-
-	<h2>
-		Controller MiLaMiSa 
-	</h2>
-	<p id="task">Task:</p>
-	    <div class="left"><canvas id="cCanvas" width="200" height="200"></canvas></div>
-		<div class="right"><canvas id="bCanvas" width="300" height="200" style="border:1px solid #000000;"></canvas></div>
-		<div class="bottomleft">Message:<span id="message"></message></div><div class="bottomright">Points:<span id="points"></points></div>
-		<script type="text/javascript" src="http://192.168.1.203/ubiss/controllerDisplay.js"></script>
+<div id="header">
+			<p id="name">MiLaMiSa</p>
+			<p id="title">Explore</p></a>
+		</div>
+		<div class="left">
+		    <p id="task">Task:</p>
+		    <canvas id="cCanvas" width="200" height="200"></canvas>
+		</div>
+		<div class="right">
+			<canvas id="bCanvas" width="300" height="200" style="border:1px solid #000000;"></canvas>
+		</div>
 	<!--
 	<div class=bottomright><h3>Connectiontype to the screen:</h3><h3 id="conntype">Cloud</h3>
 	<button onclick="controller.sendButtonPress("TEST");">Send button press to Server</button></div></div>-->
+        <div id="footer">
+			<p>Filler text....</p>
+			<div class="bottomleft">Message:<span id="message"></message>
+		    </div>
+		    <div class="bottomright">Points:<span id="points"></points>
+		    </div>
+		    <script type="text/javascript" src="controllerDisplay.js"></script>
+		</div>
+	</body>
+</html>
 </body>
 </html>
+

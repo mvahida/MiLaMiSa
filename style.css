@@ -1,0 +1,111 @@
+
+body {  
+    /*background-image: url(image-large.jpg);
+    Prevent the bg from appearing "tiled" 
+    /*background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    make sure the bg does not scroll with the page
+    background-attachment: fixed; */
+    color: white;
+    background: #b7d1c4;
+    font-family: Helvetica, Georgia, serif;
+}
+#header {
+	position: relative;
+	top: -10px;
+	height: 60px;
+	background-color: #3c4543;
+	margin-bottom: 10px;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+#name{
+	float:left;
+	margin-left: 5px;
+	padding-top: 5px;
+	font-size: 20px;
+	font-family: Verdana, sans-serif;
+	color: #ffffff;
+}
+
+#title{
+	float:right;
+	margin-right: 5px;
+	padding-top: 5px;
+	font-size: 16px;
+	font-family: Verdana, sans-serif;
+	color: #ffffff;
+}
+
+h2 {
+	margin-left: 5px;
+	margin-bottom: 15px;
+	font-family: Verdana, sans-serif;
+}
+
+.left {
+	width: 45%;
+	float: left;
+}
+
+.right{
+	width: 45%;
+	float: right;
+}
+
+#footer{
+	clear: both;
+	position: relative;
+	font-family: Verdana, sans-serif;
+	bottom: -20px;
+	font-size: 14px;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	height: 75px;
+	background-color: #3c4543;
+}
+
+#footer p {
+	position: center;
+	padding-top: 15px;
+	text-align: center;
+}
+
+.bottomright {
+		position: absolute;
+		float: right;
+		bottom: 8px;
+		right: 16px;
+}
+.bottomleft {
+			position: absolute;
+			float: left;
+			bottom: 8px;
+			left: 16px;
+		
+@media only screen and (max-width: 600px) {
+        body {
+            background-image: url(image-small.jpg);
+            color: white;
+            background: #ccc;
+        }
+    }
+    @media only screen and (min-width: 601px) and (max-width: 900px) {
+        body {
+            background-image: url(image-medium.jpg);
+            color: white;
+            background: #ccc;
+        }
+    }
+    @media only screen and (min-width: 901px)  {
+        body {
+            background-image: url(image-large.jpg);
+            color: white;
+            background: #ccc;
+        }
+    }
+
+
+
