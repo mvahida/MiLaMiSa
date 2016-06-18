@@ -8,12 +8,15 @@ body {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
+
     /*Then add the CSS property: */
     background-size: cover;
+    
     color: #ffffff;
     /*background: #b7d1c4; */
     font-family: Helvetica, Georgia, serif; 
 }
+
 #header {
 	position: relative;
 	top: -10px;
@@ -48,35 +51,19 @@ h2 {
 	font-family: Verdana, sans-serif;
 }
 
-.left {         
+#left {         
 	width: 45%;
 	float: left;
-	
 }
 
-.right{
-<<<<<<< HEAD
-    
-	position: absolute;
+#right{
+    position: absolute;
 	float: right;
 	right: 6px;
-	
 }
 
 #bCanvas {
   border:1px solid black;
-=======
-		position: absolute;
-		float: right;
-		right: 8px;
-}
-#bCanvas {
-  border:1px solid black
->>>>>>> ff419ed1283b207355156b059f255f34030b0349
-}
-
-#cCanvas {
-  
 }
 
 #footer{
@@ -87,16 +74,9 @@ h2 {
 	font-size: 14px;
 	border-bottom-left-radius: 15px;
 	border-bottom-right-radius: 15px;
-	color: #ffffff;
 	height: 75px;
 	color: #ffffff;
 	/*background-color: #3c4543;*/
-}
-
-#footer p {
-	position: center;
-	padding-top: 15px;
-	text-align: center;
 }
 
 .bottomright {
@@ -105,56 +85,52 @@ h2 {
 		bottom: 8px;
 		right: 16px;
 }
+
 .bottomleft {
 			position: absolute;
 			float: left;
 			bottom: 8px;
 			left: 16px;
-
-/*		
+		
 @media only screen and (max-width: 600px) {
         body {
-            background-image: url(image-small.jpg);
+            background-image: url('image-small.jpg');
             height: auto;
             width: auto\9; /* ie8 */
         }
     }
     @media only screen and (min-width: 601px) and (max-width: 900px) {
         body {
-            background-image: url(image-medium.jpg);
+            background-image: url('image-medium.jpg');
             height: auto;
             width: auto\9; /* ie8 */
         #right {
             float: none ;
             width: 100% ;
-        }
         #left {
             float: none ;
             width: 100% ;
-         }
+                }
+            }
         }
     }
     @media only screen and (min-width: 901px)  {
         body {
-            background-image: url(image-large.jpg);
+            background-image: url('image-large.jpg');
             height: auto;
             width: auto\9; /* ie8 */
         #right {
             float: none ;
             width: 100% ;
-        }
-        #left {
+       #left {
             float: none ;
             width: 100% ;
-         }
+               }
+            }
         }
-<<<<<<< HEAD
     }
     
    
-=======
-    } */
->>>>>>> ff419ed1283b207355156b059f255f34030b0349
 
 
 
