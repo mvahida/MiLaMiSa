@@ -55,6 +55,7 @@ h2 {
 }
 
 .right{
+<<<<<<< HEAD
     
 	position: absolute;
 	float: right;
@@ -64,6 +65,14 @@ h2 {
 
 #bCanvas {
   border:1px solid black;
+=======
+		position: absolute;
+		float: right;
+		right: 8px;
+}
+#bCanvas {
+  border:1px solid black
+>>>>>>> ff419ed1283b207355156b059f255f34030b0349
 }
 
 #cCanvas {
@@ -78,6 +87,7 @@ h2 {
 	font-size: 14px;
 	border-bottom-left-radius: 15px;
 	border-bottom-right-radius: 15px;
+	color: #ffffff;
 	height: 75px;
 	color: #ffffff;
 	/*background-color: #3c4543;*/
@@ -100,7 +110,8 @@ h2 {
 			float: left;
 			bottom: 8px;
 			left: 16px;
-		
+
+/*		
 @media only screen and (max-width: 600px) {
         body {
             background-image: url(image-small.jpg);
@@ -137,9 +148,13 @@ h2 {
             width: 100% ;
          }
         }
+<<<<<<< HEAD
     }
     
    
+=======
+    } */
+>>>>>>> ff419ed1283b207355156b059f255f34030b0349
 
 
 
