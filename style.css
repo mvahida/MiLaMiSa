@@ -1,21 +1,24 @@
 
 body {  
-    /*background-image: url(image-large.jpg);
-    Prevent the bg from appearing "tiled" 
-    /*background-size: cover;
-    background-position: center;
+    background-image: url('image-large.jpg');
     background-repeat: no-repeat;
-    make sure the bg does not scroll with the page
-    background-attachment: fixed; */
-    color: white;
-    background: #b7d1c4;
-    font-family: Helvetica, Georgia, serif;
+    background-position: center center;
+    background-attachment: fixed;
+    /*Add the browser prefixed CSS first: */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    /*Then add the CSS property: */
+    background-size: cover;
+    color: #ffffff;
+    /*background: #b7d1c4; */
+    font-family: Helvetica, Georgia, serif; 
 }
 #header {
 	position: relative;
 	top: -10px;
 	height: 60px;
-	background-color: #3c4543;
+	/*background-color: #3c4543; */
 	margin-bottom: 10px;
 	border-top-left-radius: 15px;
 	border-top-right-radius: 15px;
@@ -45,14 +48,26 @@ h2 {
 	font-family: Verdana, sans-serif;
 }
 
-.left {
+.left {         
 	width: 45%;
 	float: left;
+	
 }
 
 .right{
-	width: 45%;
+    
+	position: absolute;
 	float: right;
+	right: 6px;
+	
+}
+
+#bCanvas {
+  border:1px solid black;
+}
+
+#cCanvas {
+  
 }
 
 #footer{
@@ -64,7 +79,8 @@ h2 {
 	border-bottom-left-radius: 15px;
 	border-bottom-right-radius: 15px;
 	height: 75px;
-	background-color: #3c4543;
+	color: #ffffff;
+	/*background-color: #3c4543;*/
 }
 
 #footer p {
@@ -88,24 +104,42 @@ h2 {
 @media only screen and (max-width: 600px) {
         body {
             background-image: url(image-small.jpg);
-            color: white;
-            background: #ccc;
+            height: auto;
+            width: auto\9; /* ie8 */
         }
     }
     @media only screen and (min-width: 601px) and (max-width: 900px) {
         body {
             background-image: url(image-medium.jpg);
-            color: white;
-            background: #ccc;
+            height: auto;
+            width: auto\9; /* ie8 */
+        #right {
+            float: none ;
+            width: 100% ;
+        }
+        #left {
+            float: none ;
+            width: 100% ;
+         }
         }
     }
     @media only screen and (min-width: 901px)  {
         body {
             background-image: url(image-large.jpg);
-            color: white;
-            background: #ccc;
+            height: auto;
+            width: auto\9; /* ie8 */
+        #right {
+            float: none ;
+            width: 100% ;
+        }
+        #left {
+            float: none ;
+            width: 100% ;
+         }
         }
     }
+    
+   
 
 
 
